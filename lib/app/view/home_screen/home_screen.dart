@@ -7,6 +7,7 @@ import 'package:flutter_apps/app/view/menu_screen/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_apps/app/core/utils/color_palette.dart';
 import 'package:flutter_apps/app/core/utils/screen_sizes.dart';
+import 'package:flutter_apps/app/widget/app_icon_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -48,15 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                   actions: const [],
                   elevation: 0,
-                  title: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: SvgPicture.asset(
-                      Assets.karkinosLogo,
-                      fit: BoxFit.contain,
-                      width: 36,
-                      height: 16,
-                      colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                    ),
+                  title: const Padding(
+                    padding: EdgeInsets.all(20),
+                    child: AppIconWidget(),
                   ),
                   centerTitle: true,
                 ),

@@ -1,15 +1,7 @@
 class Assets {
   Assets._();
 
-  static const String abdmLogo = "assets/images/abdm_logo.svg";
-  static const String karkinosLogo = "assets/images/karkinos_logo.svg";
-  static const String abhaCard = "assets/images/abha_card.svg";
-
-
   /// Icons
-  static const String createIcon = "assets/icons/create_icon.svg";
-  static const String searchIcon = "assets/icons/search_icon.svg";
-  static const String verifyIcon = "assets/icons/verify_icon.svg";
   static const String completedIcon = "assets/icons/completed_icon.svg";
   static const String inProcessIcon = "assets/icons/in_process_icon.svg";
   static const String closeIcon = "assets/icons/close.svg";
