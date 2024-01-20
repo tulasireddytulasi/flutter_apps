@@ -9,7 +9,9 @@ class MenuItem extends StatefulWidget {
     required this.label,
     required this.isSelectedItem,
     this.icon = "",
-    this.margin = EdgeInsets.zero, required this.textStyle,
+    this.margin = EdgeInsets.zero,
+    required this.textStyle,
+    this.animation,
   });
 
   final String icon;
@@ -17,6 +19,7 @@ class MenuItem extends StatefulWidget {
   final bool isSelectedItem;
   final EdgeInsetsGeometry margin;
   final TextStyle textStyle;
+  final Animation<double>? animation;
 
   @override
   State<MenuItem> createState() => _MenuItemState();
@@ -32,16 +35,16 @@ class _MenuItemState extends State<MenuItem> {
       margin: widget.margin,
       decoration: widget.isSelectedItem
           ? ShapeDecoration(
-              gradient: LinearGradient(
-                begin: const Alignment(-1, 0),
-                end: const Alignment(1.00, -0.00),
-                colors: [
-                  themeProvider.colorScheme!.background,
-                  themeProvider.colorScheme!.background.withOpacity(0),
-                ],
-              ),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-            )
+        gradient: LinearGradient(
+          begin: const Alignment(-1, 0),
+          end: const Alignment(1.00, -0.00),
+          colors: [
+            themeProvider.colorScheme!.background,
+            themeProvider.colorScheme!.background.withOpacity(0),
+          ],
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      )
           : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -73,6 +76,21 @@ class _MenuItemState extends State<MenuItem> {
               color: widget.isSelectedItem ? themeProvider.colorScheme?.primary : themeProvider.colorScheme?.secondary,
             ),
           ),
+          Visibility(
+            visible: widget.icon.isNotEmpty,
+            child: const Spacer(),
+          ),
+          Visibility(
+            visible: widget.icon.isNotEmpty,
+            child: RotationTransition(
+              turns: widget.animation == null ? const AlwaysStoppedAnimation(0.0) : widget.animation!,
+              child: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: themeProvider.colorScheme?.secondary,
+              ),
+            ),
+          ),
+          Visibility(visible: widget.icon.isNotEmpty, child: const SizedBox(width: 6)),
         ],
       ),
     );

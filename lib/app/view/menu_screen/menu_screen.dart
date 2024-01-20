@@ -213,17 +213,24 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         for (int i = 0; i < _animationControllers.length; i++) {
                           if (i != index) {
                             _animationControllers[i].reverse();
+                            _iconAnimationControllerList[i].reverse();
                           }
                         }
-                        _animationControllers[index].isDismissed ? _animationControllers[index].forward() : _animationControllers[index].reverse();
+                        _iconAnimationList[index].isDismissed ?
+                        _iconAnimationControllerList[index].forward() : _iconAnimationControllerList[index].reverse();
+                        _animationControllers[index].isDismissed ?
+                        _animationControllers[index].forward() : _animationControllers[index].reverse();
+
                         menuProvider.setSelectedMenuIndex = index;
                         menuProvider.setSelectedSubMenuIndex = 0;
+
                       },
                       child: MenuItem(
                         label: menuLabel,
                         isSelectedItem: isSelectedItem,
                         icon: icon,
                         textStyle: themeProvider.titleMedium!,
+                        animation: _iconAnimationList[index],
                       ),
                     ),
                     const SizedBox(height: 8),
