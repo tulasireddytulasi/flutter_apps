@@ -50,7 +50,7 @@ class OutlinedButtonThemeStyle extends ButtonStyle {
             return BorderSide(color: disabledBorderColor ?? ColorPalette.whitePrimaryColor.shade100);
           }
 
-          return BorderSide(color: enabledBorderColor ?? ColorPalette.abhaPrimaryColor);
+          return BorderSide(color: enabledBorderColor ?? ColorPalette.primaryColor);
         } else {
           return BorderSide.none;
         }

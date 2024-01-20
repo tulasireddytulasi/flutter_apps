@@ -61,7 +61,7 @@ class AppStyles {
 
   static TextStyle titleBig = TextStyle(
     fontSize: 20,
-    color: ColorPalette.abhaPrimaryColor.shade800,
+    color: ColorPalette.primaryColor.shade800,
     fontFamily: Constants.montserratBold,
   );
 }

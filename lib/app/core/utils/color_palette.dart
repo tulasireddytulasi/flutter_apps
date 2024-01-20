@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ColorPalette {
   ColorPalette._();
 
-  static const MaterialColor abhaPrimaryColor = MaterialColor(
+  static const MaterialColor primaryColor = MaterialColor(
     0xFF7C2B7C,
     {
       900: Color(0xFF7C2B7C),

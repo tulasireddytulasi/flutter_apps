@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, child) {
         return MaterialApp.router(
-          title: 'ABHA App',
+          title: 'Movies App',
           scrollBehavior: MyCustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           theme: Provider.of<ThemeProvider>(context).currentThemeData,

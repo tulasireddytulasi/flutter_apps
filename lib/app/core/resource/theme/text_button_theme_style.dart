@@ -21,7 +21,7 @@ class TextButtonThemeStyle extends ButtonStyle {
   @override
   MaterialStateProperty<Color?>? get overlayColor {
     return MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-      return enabledTextColor?.withOpacity(0.2) ?? ColorPalette.abhaPrimaryColor.withOpacity(0.2);
+      return enabledTextColor?.withOpacity(0.2) ?? ColorPalette.primaryColor.withOpacity(0.2);
     });
   }
 
@@ -33,7 +33,7 @@ class TextButtonThemeStyle extends ButtonStyle {
           return disabledTextColor ?? ColorPalette.whitePrimaryColor.shade100;
         }
 
-        return enabledTextColor ?? ColorPalette.abhaPrimaryColor;
+        return enabledTextColor ?? ColorPalette.primaryColor;
       },
     );
   }
