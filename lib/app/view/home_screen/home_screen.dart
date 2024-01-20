@@ -70,8 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
             width: constraints.maxWidth - 80,
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(top: 40, left: 14),
-            child: MenuScreen(maxWidth: (constraints.maxWidth - 80)),
+          child: MenuScreen(
+            maxWidth: (constraints.maxWidth - 80),
+            mainScreens: widget.mainScreen,
+            subScreen: widget.subScreen,
           ),
+        ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(

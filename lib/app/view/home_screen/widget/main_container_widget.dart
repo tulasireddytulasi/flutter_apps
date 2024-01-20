@@ -49,7 +49,11 @@ class _MainContainerState extends State<MainContainer> {
               child: Container(
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.only(top: 20, left: 14),
-                child: MenuScreen(maxWidth: widget.maxWidthAndHeight.maxWidth),
+                child: MenuScreen(
+                  maxWidth: widget.maxWidthAndHeight.maxWidth,
+                  mainScreens: widget.mainScreen,
+                  subScreen: widget.subScreen,
+                ),
               ),
             ),
           ),

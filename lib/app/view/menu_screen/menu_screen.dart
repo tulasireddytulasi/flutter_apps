@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_apps/app/core/utils/assets_path.dart';
 import 'package:flutter_apps/app/core/utils/common_functions.dart';
 import 'package:flutter_apps/app/core/utils/constants.dart';
+import 'package:flutter_apps/app/core/utils/enums.dart';
 import 'package:flutter_apps/app/core/utils/screen_sizes.dart';
 import 'package:flutter_apps/app/provider/menu_provider.dart';
 import 'package:flutter_apps/app/provider/theme_provider.dart';
@@ -14,8 +15,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key, required this.maxWidth});
+  const MenuScreen({super.key, required this.maxWidth, required this.mainScreens, required this.subScreen});
   final double maxWidth;
+  final MAIN_SCREENS mainScreens;
+  final SUB_SCREENS subScreen;
 
   @override
   State<MenuScreen> createState() => _MenuScreenState();
@@ -24,6 +27,9 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   List<AnimationController> _animationControllers = [];
   List<Animation<double>> _animationList = [];
+  late final List<AnimationController> _iconAnimationControllerList;
+  late final List<Animation<double>> _iconAnimationList;
+  late MenuProvider menuProvider;
   Map<String, dynamic> menuList = {
     "Movies": {
       "icon": Assets.moviesIcon,
@@ -48,7 +54,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    menuProvider = Provider.of<MenuProvider>(context, listen: false);
     generateControllers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      expandMenu();
+    });
   }
 
   generateControllers() {
@@ -66,12 +76,73 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           parent: _animationControllers[index],
           curve: Curves.fastOutSlowIn,
         ));
+
+    _iconAnimationControllerList = List.generate(
+      menuList.length,
+          (index) => AnimationController(duration: const Duration(milliseconds: 300), vsync: this),
+    );
+
+    _iconAnimationList = List.generate(
+      menuList.length,
+          (index) => Tween(begin: 0.0, end: .25).animate(
+        CurvedAnimation(parent: _iconAnimationControllerList[index], curve: Curves.easeOut),
+      ),
+    );
+  }
+
+  expandMenu() {
+    int index = 0;
+    int subIndex = 0;
+    if (widget.mainScreens == MAIN_SCREENS.movies) {
+      index = 0;
+      if (widget.subScreen == SUB_SCREENS.popular) {
+        subIndex = 0;
+      } else if (widget.subScreen == SUB_SCREENS.topRated) {
+        subIndex = 1;
+      } else if (widget.subScreen == SUB_SCREENS.nowPlaying) {
+        subIndex = 2;
+      }
+    } else if (widget.mainScreens == MAIN_SCREENS.tvSeries) {
+      index = 1;
+      if (widget.subScreen == SUB_SCREENS.popular) {
+        subIndex = 0;
+      } else if (widget.subScreen == SUB_SCREENS.topRated) {
+        subIndex = 1;
+      } else if (widget.subScreen == SUB_SCREENS.nowPlaying) {
+        subIndex = 2;
+      }
+    } else if (widget.mainScreens == MAIN_SCREENS.celebrities) {
+      index = 2;
+      if (widget.subScreen == SUB_SCREENS.popular) {
+        subIndex = 0;
+      } else if (widget.subScreen == SUB_SCREENS.topRated) {
+        subIndex = 1;
+      }
+    }
+
+    /// Expand Menu
+    for (int i = 0; i < _animationControllers.length; i++) {
+      /// When a menu item is unselected, it should be closed to ensure a clean
+      /// and uncluttered user interface.
+      if (i != index) {
+        _animationControllers[i].reverse();
+        _iconAnimationControllerList[i].reverse();
+      }
+    }
+    _iconAnimationList[index].isDismissed ? _iconAnimationControllerList[index].forward() : _iconAnimationControllerList[index].reverse();
+    _animationControllers[index].isDismissed ? _animationControllers[index].forward() : _animationControllers[index].reverse();
+
+    menuProvider.setSelectedMenuIndex = index;
+    menuProvider.setSelectedSubMenuIndex = subIndex;
   }
 
   @override
   void dispose() {
     /// Dispose controllers to avoid memory leaks
     for (AnimationController controller in _animationControllers) {
+      controller.dispose();
+    }
+    for (AnimationController controller in _iconAnimationControllerList) {
       controller.dispose();
     }
     super.dispose();
@@ -89,7 +160,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "ABHA",
+              "Movies",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontFamily: Constants.montserratSemiBold),
             ),
             Visibility(
