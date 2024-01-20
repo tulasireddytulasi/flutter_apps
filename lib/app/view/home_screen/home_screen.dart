@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             maxWidth: (constraints.maxWidth - 80),
             mainScreens: widget.mainScreen,
             subScreen: widget.subScreen,
+            isMobileScreen: true,
           ),
         ),
           body: SafeArea(

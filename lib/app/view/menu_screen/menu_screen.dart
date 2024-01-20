@@ -15,10 +15,17 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key, required this.maxWidth, required this.mainScreens, required this.subScreen});
+  const MenuScreen({
+    super.key,
+    required this.maxWidth,
+    required this.mainScreens,
+    required this.subScreen,
+    this.isMobileScreen = false,
+  });
   final double maxWidth;
   final MAIN_SCREENS mainScreens;
   final SUB_SCREENS subScreen;
+  final bool isMobileScreen;
 
   @override
   State<MenuScreen> createState() => _MenuScreenState();
@@ -244,6 +251,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                         routes: routesList,
                         isSelectedSubMenuItem: isSelectedItem,
                         selectedSubMenuItemIndex: menuProvider.selectedSubMenuIndex,
+                        isMobileScreen: widget.isMobileScreen,
                       ),
                     ),
                   ],

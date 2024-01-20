@@ -11,7 +11,9 @@ class SubMenuList extends StatelessWidget {
     required this.labels,
     required this.routes,
     required this.isSelectedSubMenuItem,
-    required this.selectedSubMenuItemIndex, required this.maxWidth,
+    required this.selectedSubMenuItemIndex,
+    required this.maxWidth,
+    required this.isMobileScreen,
   });
 
   final List<String> labels;
@@ -19,6 +21,7 @@ class SubMenuList extends StatelessWidget {
   final bool isSelectedSubMenuItem;
   final int selectedSubMenuItemIndex;
   final double maxWidth;
+  final bool isMobileScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,9 @@ class SubMenuList extends StatelessWidget {
                 MenuProvider menuProvider = Provider.of<MenuProvider>(context, listen: false);
                 menuProvider.setSelectedSubMenuIndex = index;
                 GoRouter.of(context).go(routes[index]);
+                if (isMobileScreen) {
+                  Navigator.pop(context);
+                }
               },
               child: MenuItem(
                 label: labels[index],
